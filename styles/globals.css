@@ -1,26 +1,183 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap');
+/* font-family: 'Genos', sans-serif; */
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+
+/* NOWE */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap');
+/* font-family: 'EB Garamond', serif; */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600&display=swap');
+/* font-family: 'Poppins', sans-serif; */
 
 * {
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+html {
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
+
+.app {
+    --appBgColor: #fff;
+    --primaryColor: rgb(10, 10, 10);
+    --secondaryColor: #94693c;
+    --secondaryColor2: #5a270d;
+    --navBgColor: #3c2d25;
+    --footerBgColor: #eee6e0;
+    --textFont: 'EB Garamond', serif;
+    --titleFont: 'Poppins', sans-serif;
+    width: 100vw;
+    min-height: 100vh;
+    background-color: var(--appBgColor);
+    color: var(--primaryColor);
+    font-family: var(--textFont);
+    position: relative;
+}
+
+
+.mainPage {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 10vh 5vw 0;
+    position: relative;
+}
+
+@media screen and (max-width:800px) {
+    .mainPage {
+        width: 100vw;
+        padding: 10vh 0vw 0;
+    }
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title h2 {
+    font-family: var(--titleFont);
+    font-size: 2.7rem;
+    font-weight: 600;
+    color: var(--secondaryColor);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+
+.buttonLink {
+    background: none;
+    border: none;
+    font-size: 4rem;
+    cursor: pointer;
+    color: var(--navbarBgColor);
+    transition: 0.5s;
+}
+
+.buttonLink:hover {
+    color: var(--secondaryColor);
+}
+
+
+.icon {
+    color: var(--secondaryColor2);
+    margin-right: 10px;
+}
+
+.cookieLink {
+    margin-left: 10px;
+    cursor: pointer;
+    color: var(--activeNavLink);
+}
+
+
+/* .loading {
+    margin: 30vh auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading img {
+    margin-bottom: 5vh;
+}
+
+.loading h2 {
+    font-family: var(--titleFont);
+    font-weight: 600;
+} */
+
+.navHamburger {
+    position: fixed;
+    top: 0vh;
+    right: 4vw;
+    width: 50px;
+    height: 50px;
+    z-index: 999999;
+    background: var(--navigationBgColor);
+    display: none;
+    font-size: 2.3rem;
+    border-radius: 0 0 10px 10px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    color: #fff;
+}
+
+.navHamburger2 {
+    position: fixed;
+    bottom: 0vh;
+    right: 4vw;
+    width: 50px;
+    height: 50px;
+    z-index: 999999;
+    background: var(--navigationBgColor);
+    display: none;
+    font-size: 2rem;
+    border-radius: 10px 10px 0 0;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    color: #fff;
+}
+
+@media screen and (max-width:800px) {
+
+    .navHamburger,
+    .navHamburger2 {
+        display: flex;
+    }
+}
+
+
+/* SCROOL BAR */
+
+html::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+html::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+html::-webkit-scrollbar-thumb {
+    background: #48331d;
+    border: 2px solid #f1f1f1;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+html::-webkit-scrollbar-thumb:hover {
+    background: #65481e;
 }
