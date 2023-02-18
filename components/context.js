@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 
+import { db } from "../firebase/clientApp";
+import { collection, getDocs } from "firebase/firestore";
+
 // const alert = document.querySelector(".alert");
 const AppContext = React.createContext();
 
-const url = "#";
+// const url = "#";
 const AppProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [productName, setProductName] = useState("");
@@ -13,23 +16,48 @@ const AppProvider = ({ children }) => {
   const [activeProducts, setActiveProducts] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const productsCollectionRef = collection(db, "products");
+
   // ****** LOCAL STORAGE **********
 
-  const getLocalStorage = () => {
-    const saved = localStorage.getItem("products");
-    const initialValue = JSON.parse(saved);
-    setProducts(initialValue);
-    return initialValue;
-  };
-  useEffect(() => {
-    getLocalStorage();
-  }, []);
+  // const getLocalStorage = () => {
+  //   const saved = localStorage.getItem("products");
+  //   const initialValue = JSON.parse(saved);
+  //   setProducts(initialValue);
+  //   return initialValue;
+  // };
+  // useEffect(() => {
+  //   getLocalStorage();
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem("products", JSON.stringify(products));
-  }, [products]);
+  // useEffect(() => {
+  //   localStorage.setItem("products", JSON.stringify(products));
+  // }, [products]);
 
   // ****** END LOCAL STORAGE **********
+
+  useEffect(() => {
+    const getProducts = async () => {
+      setLoading(true);
+      try {
+        const data = await getDocs(productsCollectionRef);
+        const items = data.docs.map((doc) => ({ ...doc.data() }));
+        if (items.length > 0) {
+          setProducts(items);
+        } else {
+          setProducts([]);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    };
+    getProducts();
+    setInterval(() => {
+      getProducts();
+    }, 60000);
+  }, []);
 
   const handleChange = (e) => {
     setProductName(e.target.value);

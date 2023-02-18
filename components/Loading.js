@@ -1,4 +1,4 @@
-const loadingGif = "./images/loading.gid";
+const loadingGif = "./images/loading.gif";
 
 const Loading = () => {
   return (
