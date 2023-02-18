@@ -43,7 +43,7 @@ const VoiceForm = () => {
 
   const addItemVoice = (food) => {
     setLoading(false);
-    const id = new Date().getTime().toString().slice(3, -1);
+    const id = Number(new Date().getTime().toString().slice(0, -1));
     if (food) {
       const newProduct = {
         id: id,

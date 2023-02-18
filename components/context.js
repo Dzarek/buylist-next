@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import { db } from "../firebase/clientApp";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 
-// const alert = document.querySelector(".alert");
 const AppContext = React.createContext();
 
-// const url = "#";
 const AppProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [productName, setProductName] = useState("");
@@ -41,9 +46,13 @@ const AppProvider = ({ children }) => {
       setLoading(true);
       try {
         const data = await getDocs(productsCollectionRef);
-        const items = data.docs.map((doc) => ({ ...doc.data() }));
+        const items = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        const sortItems = items.sort(
+          (a, b) => Number(a.productId) - Number(b.productId)
+        );
+        console.log(sortItems);
         if (items.length > 0) {
-          setProducts(items);
+          setProducts(sortItems);
         } else {
           setProducts([]);
         }
@@ -63,30 +72,18 @@ const AppProvider = ({ children }) => {
     setProductName(e.target.value);
   };
 
-  const postProducts = async (id, productName) =>
-    await fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data: {
-          id: id,
-          name: productName,
-          idproduct: id,
-        },
-      }),
-    });
+  const postProducts = async (id, productName) => {
+    await addDoc(productsCollectionRef, { productId: id, name: productName });
+  };
 
   const addItem = (e) => {
     setLoading(false);
     e.preventDefault();
-    const id = new Date().getTime().toString().slice(3, -1);
+    const id = Number(new Date().getTime().toString().slice(0, -1));
     if (productName && !edit) {
       displayAlert("dodano do listy", "success");
       const newProduct = {
-        id: id,
+        productId: id,
         name: productName,
       };
       setProducts([...products, newProduct]);
@@ -107,23 +104,14 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const putEdit = async (editID, productName) =>
-    await fetch(`${url}${editID}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data: {
-          id: editID,
-          name: productName,
-          idproduct: editID,
-        },
-      }),
-    });
+  const putEdit = async (editID, productName) => {
+    const productDoc = doc(db, "products", editID);
+    const updatedProcuct = { name: productName };
+    await updateDoc(productDoc, updatedProcuct);
+  };
 
   const handleEditItem = (id) => {
+    const alert = document.querySelector(".alert");
     function displayAlertEdition(text, action) {
       alert.textContent = text;
       alert.classList.add(`alert-${action}`);
@@ -160,9 +148,8 @@ const AppProvider = ({ children }) => {
   const deleteEverything = () => {
     if (products.length > 0) {
       products.forEach((item) => {
-        fetch(`${url}${item.id}`, {
-          method: "DELETE",
-        });
+        const productDoc = doc(db, "products", item.id);
+        deleteDoc(productDoc);
       });
       setProducts([]);
     }
@@ -173,10 +160,9 @@ const AppProvider = ({ children }) => {
   const deleteItem = (id) => {
     const updateProducts = products.filter((item) => item.id !== id);
     displayAlert("usunięto z listy", "danger");
+    const productDoc = doc(db, "products", id);
     setTimeout(() => {
-      fetch(`${url}${id}`, {
-        method: "DELETE",
-      });
+      deleteDoc(productDoc);
       setProducts(updateProducts);
     }, 500);
   };
