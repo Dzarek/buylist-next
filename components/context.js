@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import { db } from "../firebase/clientApp";
 import {
   collection,
@@ -19,7 +18,7 @@ const AppProvider = ({ children }) => {
   const [editID, setEditID] = useState(null);
   const [openClearModal, setOpenClearModal] = useState(false);
   const [activeProducts, setActiveProducts] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const productsCollectionRef = collection(db, "products");
 
@@ -41,31 +40,27 @@ const AppProvider = ({ children }) => {
 
   // ****** END LOCAL STORAGE **********
 
-  useEffect(() => {
-    const getProducts = async () => {
-      setLoading(true);
-      try {
-        const data = await getDocs(productsCollectionRef);
-        const items = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        const sortItems = items.sort(
-          (a, b) => Number(a.productId) - Number(b.productId)
-        );
-        console.log(sortItems);
-        if (items.length > 0) {
-          setProducts(sortItems);
-        } else {
-          setProducts([]);
-        }
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
+  const getProducts = async () => {
+    // setLoading(true);
+    try {
+      const data = await getDocs(productsCollectionRef);
+      const items = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      const sortItems = items.sort(
+        (a, b) => Number(a.productId) - Number(b.productId)
+      );
+      if (items.length > 0) {
+        setProducts(sortItems);
+      } else {
+        setProducts([]);
       }
-    };
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     getProducts();
-    setInterval(() => {
-      getProducts();
-    }, 60000);
   }, []);
 
   const handleChange = (e) => {
@@ -74,6 +69,7 @@ const AppProvider = ({ children }) => {
 
   const postProducts = async (id, productName) => {
     await addDoc(productsCollectionRef, { productId: id, name: productName });
+    await getProducts();
   };
 
   const addItem = (e) => {

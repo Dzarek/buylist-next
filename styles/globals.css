@@ -96,7 +96,7 @@ input {
     left: 0;
     height: 100vh;
     width: 100vw;
-    background-image: url('../public/images/background.png');
+    background-image: url('/images/background.png');
     background-position: center center;
     background-size: 100%;
     z-index: -1;
@@ -523,11 +523,11 @@ Grocery List
 }
 
 .food {
-    background-image: url('../public/images/jedzenie.png');
+    background-image: url('/images/jedzenie.png');
 }
 
 .chemic {
-    background-image: url('../public/images/chemia.png');
+    background-image: url('/images/chemia.png');
 }
 
 
