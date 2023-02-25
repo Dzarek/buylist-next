@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { db } from "../firebase/clientApp";
+import { db, auth } from "../firebase/clientApp";
 import {
   collection,
   getDocs,
@@ -8,6 +8,14 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
 
 const AppContext = React.createContext();
 
@@ -19,31 +27,58 @@ const AppProvider = ({ children }) => {
   const [openClearModal, setOpenClearModal] = useState(false);
   const [activeProducts, setActiveProducts] = useState("");
   const [loading, setLoading] = useState(true);
+  const [userProductsList, setUserProductsList] = useState("a");
 
-  const productsCollectionRef = collection(db, "products");
+  // Auth
+  const [name, setName] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // ****** LOCAL STORAGE **********
+  const getUser = getAuth();
 
-  // const getLocalStorage = () => {
-  //   const saved = localStorage.getItem("products");
-  //   const initialValue = JSON.parse(saved);
-  //   setProducts(initialValue);
-  //   return initialValue;
-  // };
-  // useEffect(() => {
-  //   getLocalStorage();
-  // }, []);
+  const signup = async (email, password, name) => {
+    await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(getUser.currentUser, {
+      displayName: name,
+    });
+  };
 
-  // useEffect(() => {
-  //   localStorage.setItem("products", JSON.stringify(products));
-  // }, [products]);
+  const login = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password);
+  };
 
-  // ****** END LOCAL STORAGE **********
+  const logout = () => {
+    setLoading(true);
+    signOut(auth);
+    setName("");
+    setUserProductsList("a");
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user);
+    });
+    if (currentUser) {
+      setUserProductsList(currentUser.displayName + "+" + currentUser.uid);
+      setName(currentUser.displayName);
+    }
+    if (!currentUser) {
+      setLoading(true);
+    }
+    return unsubscribe;
+  }, [currentUser]);
+
+  // const productsCollectionRef = collection(db, "products");
+  const productsCollectionRefAll = collection(db, userProductsList);
+
+  // End Auth
 
   const getProducts = async () => {
-    // setLoading(true);
     try {
-      const data = await getDocs(productsCollectionRef);
+      const data = await getDocs(productsCollectionRefAll);
       const items = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       const sortItems = items.sort(
         (a, b) => Number(a.productId) - Number(b.productId)
@@ -53,27 +88,29 @@ const AppProvider = ({ children }) => {
       } else {
         setProducts([]);
       }
-      setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   };
   useEffect(() => {
-    getProducts();
-  }, []);
+    if (currentUser) {
+      getProducts();
+    }
+  }, [loading]);
 
   const handleChange = (e) => {
     setProductName(e.target.value);
   };
 
   const postProducts = async (id, productName) => {
-    await addDoc(productsCollectionRef, { productId: id, name: productName });
+    await addDoc(productsCollectionRefAll, {
+      productId: id,
+      name: productName,
+    });
     await getProducts();
   };
 
   const addItem = (e) => {
-    setLoading(false);
     e.preventDefault();
     const id = Number(new Date().getTime().toString().slice(0, -1));
     if (productName && !edit) {
@@ -101,7 +138,7 @@ const AppProvider = ({ children }) => {
   };
 
   const putEdit = async (editID, productName) => {
-    const productDoc = doc(db, "products", editID);
+    const productDoc = doc(db, userProductsList, editID);
     const updatedProcuct = { name: productName };
     await updateDoc(productDoc, updatedProcuct);
   };
@@ -115,7 +152,7 @@ const AppProvider = ({ children }) => {
       setTimeout(function () {
         alert.textContent = "";
         alert.classList.remove(`alert-${action}`);
-      }, 2000);
+      }, 1000);
     }
     displayAlertEdition("edycja", "info");
     const oneProduct = products.find((item) => item.id === id);
@@ -138,13 +175,13 @@ const AppProvider = ({ children }) => {
     setTimeout(function () {
       alert.textContent = "";
       alert.classList.remove(`alert-${action}`);
-    }, 2000);
+    }, 1000);
   }
 
   const deleteEverything = () => {
     if (products.length > 0) {
       products.forEach((item) => {
-        const productDoc = doc(db, "products", item.id);
+        const productDoc = doc(db, userProductsList, item.id);
         deleteDoc(productDoc);
       });
       setProducts([]);
@@ -156,7 +193,7 @@ const AppProvider = ({ children }) => {
   const deleteItem = (id) => {
     const updateProducts = products.filter((item) => item.id !== id);
     displayAlert("usunięto z listy", "danger");
-    const productDoc = doc(db, "products", id);
+    const productDoc = doc(db, userProductsList, id);
     setTimeout(() => {
       deleteDoc(productDoc);
       setProducts(updateProducts);
@@ -184,6 +221,12 @@ const AppProvider = ({ children }) => {
         postProducts,
         setActiveProducts,
         setLoading,
+        currentUser,
+        login,
+        signup,
+        logout,
+        name,
+        setName,
       }}
     >
       {children}

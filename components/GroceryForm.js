@@ -1,11 +1,13 @@
 import { useGlobalContext } from "./context";
 import VoiceForm from "./VoiceForm";
+import Header from "./auth/Header";
 
 const GroceryForm = () => {
   const { handleChange, productName, addItem, edit } = useGlobalContext();
 
   return (
     <form className="grocery-form" onSubmit={addItem}>
+      <Header />
       <p className="alert"></p>
       <h3>Lista Zakupów</h3>
       <div className="form-control">

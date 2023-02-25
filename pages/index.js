@@ -3,9 +3,10 @@ import GroceryForm from "../components/GroceryForm";
 import GroceryContainer from "../components/GroceryContainer";
 import Favorite from "../components/Favorite";
 import { useGlobalContext } from "../components/context";
+import Login from "../components/auth/Login";
 
 export default function Home() {
-  const { activeProducts } = useGlobalContext();
+  const { activeProducts, currentUser } = useGlobalContext();
 
   return (
     <>
@@ -19,18 +20,22 @@ export default function Home() {
       </Head>
       <div className="app">
         <div className="bg"></div>
-        <section className="center">
-          <GroceryForm />
-          <GroceryContainer />
-          <Favorite />
-          {activeProducts && (
-            <footer>
-              <a href="https://icons8.com">
-                Icony produktów: <span>https://icons8.com</span>{" "}
-              </a>
-            </footer>
-          )}
-        </section>
+        {!currentUser ? (
+          <Login />
+        ) : (
+          <section className="center">
+            <GroceryForm />
+            <GroceryContainer />
+            <Favorite />
+            {activeProducts && (
+              <footer>
+                <a href="https://icons8.com">
+                  Icony produktów: <span>https://icons8.com</span>{" "}
+                </a>
+              </footer>
+            )}
+          </section>
+        )}
       </div>
     </>
   );
