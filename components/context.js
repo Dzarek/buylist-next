@@ -42,8 +42,8 @@ const AppProvider = ({ children }) => {
     });
   };
 
-  const login = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password);
+  const login = async (email, password) => {
+    await signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = () => {
@@ -62,7 +62,7 @@ const AppProvider = ({ children }) => {
       setCurrentUser(user);
     });
     if (currentUser) {
-      setUserProductsList(currentUser.displayName + "+" + currentUser.uid);
+      setUserProductsList(currentUser.displayName + "-" + currentUser.uid);
       setName(currentUser.displayName);
     }
     if (!currentUser) {
@@ -152,7 +152,7 @@ const AppProvider = ({ children }) => {
       setTimeout(function () {
         alert.textContent = "";
         alert.classList.remove(`alert-${action}`);
-      }, 1000);
+      }, 1500);
     }
     displayAlertEdition("edycja", "info");
     const oneProduct = products.find((item) => item.id === id);
@@ -175,7 +175,7 @@ const AppProvider = ({ children }) => {
     setTimeout(function () {
       alert.textContent = "";
       alert.classList.remove(`alert-${action}`);
-    }, 1000);
+    }, 1500);
   }
 
   const deleteEverything = () => {

@@ -15,8 +15,8 @@ const Header = () => {
 };
 
 const Wrapper = styled.div`
-  position: absolute;
-  top: -1vh;
+  position: fixed;
+  top: 0vh;
   left: 0;
   z-index: 999;
   width: 100vw;

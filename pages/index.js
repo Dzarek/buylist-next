@@ -4,9 +4,18 @@ import GroceryContainer from "../components/GroceryContainer";
 import Favorite from "../components/Favorite";
 import { useGlobalContext } from "../components/context";
 import Login from "../components/auth/Login";
+import { useState, useEffect } from "react";
+import FirstLoading from "../components/FirstLoading";
 
 export default function Home() {
   const { activeProducts, currentUser } = useGlobalContext();
+  const [firstLoading, setFirstLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFirstLoading(false);
+    }, 2000);
+  }, []);
 
   return (
     <>
@@ -18,25 +27,29 @@ export default function Home() {
         <link rel="apple-touch-icon" href="/logo192.png" />
         <link rel="shortcut icon" href="/logo192.png" />
       </Head>
-      <div className="app">
-        <div className="bg"></div>
-        {!currentUser ? (
-          <Login />
-        ) : (
-          <section className="center">
-            <GroceryForm />
-            <GroceryContainer />
-            <Favorite />
-            {activeProducts && (
-              <footer>
-                <a href="https://icons8.com">
-                  Icony produktów: <span>https://icons8.com</span>{" "}
-                </a>
-              </footer>
-            )}
-          </section>
-        )}
-      </div>
+      {firstLoading ? (
+        <FirstLoading />
+      ) : (
+        <div className="app">
+          <div className="bg"></div>
+          {!currentUser ? (
+            <Login />
+          ) : (
+            <section className="center">
+              <GroceryForm />
+              <GroceryContainer />
+              <Favorite />
+              {activeProducts && (
+                <footer>
+                  <a href="https://icons8.com">
+                    Icony produktów: <span>https://icons8.com</span>{" "}
+                  </a>
+                </footer>
+              )}
+            </section>
+          )}
+        </div>
+      )}
     </>
   );
 }

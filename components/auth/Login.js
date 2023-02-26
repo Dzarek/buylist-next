@@ -1,41 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGlobalContext } from "../context";
 import styled from "styled-components";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [errorLogin, setErrorLogin] = useState("");
   const [isLoginIn, setIsLoginIn] = useState(true);
 
   const { login, signup, name, setName } = useGlobalContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError("Proszę uzupełnić pola logowania!");
+    if (!email || !password || (!isLoginIn && !password2)) {
+      setErrorLogin("Proszę uzupełnić pola logowania!");
+      return;
+    }
+    if (!isLoginIn && password !== password2) {
+      setErrorLogin("Wprowadzone hasła nie są zgodne!");
       return;
     }
     if (isLoginIn) {
       try {
         await login(email, password);
       } catch (err) {
-        setError("Niepoprawny email lub hasło!");
+        setErrorLogin("Nieprawidłowy email lub hasło!");
       }
       return;
     }
     await signup(email, password, name);
   };
 
+  useEffect(() => {
+    setErrorLogin("");
+  }, [isLoginIn]);
+
   return (
     <Wrapper>
       <div className="container">
         <h2>{isLoginIn ? "Logowanie" : "Rejestracja"}</h2>
-        {error && (
-          <div>
-            <h2>{error}</h2>
-          </div>
-        )}
+        {errorLogin && <h4 className="errorInfo">{errorLogin}</h4>}
         <form>
           {!isLoginIn && (
             <input
@@ -60,16 +65,14 @@ const Login = () => {
             value={password}
             required
           />
-          {isLoginIn && (
-            <section className="login-remember">
-              <input
-                id="remember"
-                type="checkbox"
-                // checked={rememberLogin}
-                // onChange={() => setRememberLogin(!rememberLogin)}
-              />
-              <label htmlFor="remember">ZAPAMIĘTAJ MNIE</label>
-            </section>
+          {!isLoginIn && (
+            <input
+              type="password"
+              placeholder="Powtórz hasło"
+              onChange={(e) => setPassword2(e.target.value)}
+              value={password2}
+              required
+            />
           )}
           <button type="submit" onClick={(e) => handleSubmit(e)}>
             {isLoginIn ? "zaloguj się" : "zarejestruj się"}
@@ -100,7 +103,7 @@ const Wrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.9);
   width: 100vw;
   min-height: 100vh;
   padding: 50px 20px;
@@ -119,9 +122,17 @@ const Wrapper = styled.div`
     width: 50vw;
     min-height: 60vh;
     @media screen and (max-width: 800px) {
-      width: 90vw;
+      width: 100vw;
       min-height: 70vh;
     }
+  }
+  .errorInfo {
+    font-size: 1rem;
+    text-align: center;
+    margin: 5vh auto 3vh;
+    color: var(--clr-red-dark);
+    font-weight: 500;
+    text-transform: uppercase;
   }
   h2 {
     text-transform: uppercase;
@@ -129,18 +140,20 @@ const Wrapper = styled.div`
     font-size: 1.5rem;
   }
   form {
-    margin: 5vh auto;
+    margin: 3vh auto 5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 90%;
     input {
+      font-size: 0.9rem;
       width: 100%;
       margin: 1vh auto;
-      padding: 5px 10px;
+      padding: 10px 20px;
+      border: 1px solid #111;
     }
-    .login-remember {
+    /* .login-remember {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -150,10 +163,10 @@ const Wrapper = styled.div`
         height: 20px;
         margin-right: 10px;
       }
-    }
+    } */
     button {
       margin: 6vh auto 0vh;
-      padding: 10px 20px;
+      padding: 10px 30px;
       background: rgb(54, 102, 9);
       color: #fff;
       border-radius: 10px;
@@ -165,10 +178,14 @@ const Wrapper = styled.div`
     p {
       color: #222;
       text-align: center;
+      font-size: 1.1rem;
+      margin-top: 2vh;
       span {
         color: rgb(54, 102, 9);
         font-weight: 600;
         cursor: pointer;
+        display: block;
+        margin-top: 1vh;
       }
     }
   }
