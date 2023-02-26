@@ -38,9 +38,10 @@
     --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     --max-width: 1170px;
     --fixed-width: 620px;
-    /* --bgColor: #2a2b29; */
+    /* --bgColor: rgb(53, 60, 53); */
 
-    --bgColor: rgb(53, 60, 53);
+    /* --bgColor: hsl(211, 27%, 18%); */
+    --bgColor: hsl(213, 29%, 25%);
 
 }
 

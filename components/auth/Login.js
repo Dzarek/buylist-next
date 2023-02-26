@@ -136,7 +136,8 @@ const Wrapper = styled.div`
   }
   h2 {
     text-transform: uppercase;
-    color: rgb(54, 102, 9);
+    /* color: rgb(54, 102, 9); */
+    color: var(--clr-primary-2);
     font-size: 1.5rem;
   }
   form {
@@ -156,7 +157,8 @@ const Wrapper = styled.div`
     button {
       margin: 6vh auto 0vh;
       padding: 10px 30px;
-      background: rgb(54, 102, 9);
+      /* background: rgb(54, 102, 9); */
+      background: var(--clr-primary-2);
       color: #fff;
       border-radius: 10px;
       border: none;
@@ -170,7 +172,7 @@ const Wrapper = styled.div`
       font-size: 1.1rem;
       margin-top: 2vh;
       span {
-        color: rgb(54, 102, 9);
+        color: var(--clr-primary-2);
         font-weight: 600;
         cursor: pointer;
         display: block;

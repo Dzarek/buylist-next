@@ -36,7 +36,7 @@ const Favorite = () => {
 
   return (
     <div className="favorite">
-      <h4 className="favorite-title">Ulubione Produkty</h4>
+      <h4 className="favorite-title">Popularne Produkty</h4>
       <div className="favorite-choose">
         <button
           onClick={handleFood}
