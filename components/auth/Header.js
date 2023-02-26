@@ -1,6 +1,6 @@
+import styled from "styled-components";
 import { useGlobalContext } from "../context";
 import { FaUserCircle, FaUserMinus } from "react-icons/fa";
-import styled from "styled-components";
 
 const Header = () => {
   const { logout, name } = useGlobalContext();

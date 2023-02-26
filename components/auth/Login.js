@@ -1,6 +1,6 @@
+import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useGlobalContext } from "../context";
-import styled from "styled-components";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -153,17 +153,6 @@ const Wrapper = styled.div`
       padding: 10px 20px;
       border: 1px solid #111;
     }
-    /* .login-remember {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 2vh;
-      input {
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-      }
-    } */
     button {
       margin: 6vh auto 0vh;
       padding: 10px 30px;

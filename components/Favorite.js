@@ -1,8 +1,8 @@
 import React from "react";
-import { useGlobalContext } from "./context";
-import { jedzenie, chemia } from "../data";
 import FavoriteJedzenie from "./FavoriteJedzenie";
 import FavoriteChemia from "./FavoriteChemia";
+import { useGlobalContext } from "./context";
+import { jedzenie, chemia } from "../data";
 
 const Favorite = () => {
   const {

@@ -1,6 +1,6 @@
 import GroceryItem from "./GroceryItem";
-import { useGlobalContext } from "./context";
 import Loading from "./Loading";
+import { useGlobalContext } from "./context";
 
 const GroceryContainer = () => {
   const {

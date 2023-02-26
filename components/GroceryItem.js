@@ -13,7 +13,6 @@ const GroceryItem = ({ id, name }) => {
     <article
       data-id={id}
       className={newClass ? "grocery-item toLeftSide" : "grocery-item"}
-      // className="grocery-item"
     >
       <div className="ok">
         <button

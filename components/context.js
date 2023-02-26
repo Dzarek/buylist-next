@@ -26,10 +26,10 @@ const AppProvider = ({ children }) => {
   const [editID, setEditID] = useState(null);
   const [openClearModal, setOpenClearModal] = useState(false);
   const [activeProducts, setActiveProducts] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [userProductsList, setUserProductsList] = useState("a");
 
   // Auth
+  const [loading, setLoading] = useState(true);
+  const [userProductsList, setUserProductsList] = useState("a");
   const [name, setName] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -62,6 +62,7 @@ const AppProvider = ({ children }) => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
     });
@@ -80,6 +81,7 @@ const AppProvider = ({ children }) => {
 
   // End Auth
 
+  // Pobieranie produktów Firebase
   const getProducts = async () => {
     try {
       const data = await getDocs(productsCollectionRefAll);
@@ -106,6 +108,7 @@ const AppProvider = ({ children }) => {
     setProductName(e.target.value);
   };
 
+  // Wysyłka produktu Firebase
   const postProducts = async (id, productName) => {
     await addDoc(productsCollectionRefAll, {
       productId: id,
@@ -114,6 +117,7 @@ const AppProvider = ({ children }) => {
     await getProducts();
   };
 
+  // Dodawanie produktu
   const addItem = (e) => {
     e.preventDefault();
     const id = Number(new Date().getTime().toString().slice(0, -1));
@@ -141,6 +145,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Wysyłka Edycji Firebase
   const putEdit = async (editID, productName) => {
     const productDoc = doc(db, userProductsList, editID);
     const updatedProcuct = { name: productName };
@@ -182,6 +187,7 @@ const AppProvider = ({ children }) => {
     }, 1500);
   }
 
+  // Usuwanie całej listy Firebase
   const deleteEverything = () => {
     if (products.length > 0) {
       products.forEach((item) => {
@@ -194,6 +200,7 @@ const AppProvider = ({ children }) => {
     displayAlert("lista wyczyszczona", "danger");
   };
 
+  // Usuwanie elementu listy Firebase
   const deleteItem = (id) => {
     const updateProducts = products.filter((item) => item.id !== id);
     displayAlert("usunięto z listy", "danger");

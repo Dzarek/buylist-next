@@ -2,10 +2,10 @@ import Head from "next/head";
 import GroceryForm from "../components/GroceryForm";
 import GroceryContainer from "../components/GroceryContainer";
 import Favorite from "../components/Favorite";
-import { useGlobalContext } from "../components/context";
 import Login from "../components/auth/Login";
-import { useState, useEffect } from "react";
 import FirstLoading from "../components/FirstLoading";
+import { useState, useEffect } from "react";
+import { useGlobalContext } from "../components/context";
 
 export default function Home() {
   const { activeProducts, currentUser } = useGlobalContext();

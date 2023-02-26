@@ -20,6 +20,9 @@ const Wrapper = styled.div`
     width: 35%;
     animation: imgRotate 0.8s linear infinite alternate;
     transform-origin: top center;
+    @media screen and (min-width: 801px) {
+      width: 200px;
+    }
   }
   @keyframes imgRotate {
     0% {
