@@ -40,6 +40,10 @@ const AppProvider = ({ children }) => {
     await updateProfile(getUser.currentUser, {
       displayName: name,
     });
+    setUserProductsList(
+      getUser.currentUser.displayName + "-" + getUser.currentUser.uid
+    );
+    setName(getUser.currentUser.displayName);
   };
 
   const login = async (email, password) => {
@@ -57,7 +61,7 @@ const AppProvider = ({ children }) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 1000);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
     });

@@ -500,6 +500,12 @@ Grocery List
     border-radius: 7px;
 }
 
+@media screen and (min-width: 801px) {
+    .clear-btn {
+        margin-top: 10vh;
+    }
+}
+
 .clear-btn:hover {
     color: var(--clr-red-dark);
 }
