@@ -40,9 +40,10 @@ const AppProvider = ({ children }) => {
     await updateProfile(getUser.currentUser, {
       displayName: name,
     });
-    setUserProductsList(
-      getUser.currentUser.displayName + "-" + getUser.currentUser.uid
-    );
+    // setUserProductsList(
+    //   getUser.currentUser.displayName + "-" + getUser.currentUser.uid
+    // );
+    setUserProductsList(getUser.currentUser.uid);
     setName(getUser.currentUser.displayName);
   };
 
@@ -67,7 +68,8 @@ const AppProvider = ({ children }) => {
       setCurrentUser(user);
     });
     if (currentUser) {
-      setUserProductsList(currentUser.displayName + "-" + currentUser.uid);
+      // setUserProductsList(currentUser.displayName + "-" + currentUser.uid);
+      setUserProductsList(currentUser.uid);
       setName(currentUser.displayName);
     }
     if (!currentUser) {
