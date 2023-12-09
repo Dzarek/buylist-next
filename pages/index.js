@@ -42,7 +42,7 @@ export default function Home() {
               {activeProducts && (
                 <footer>
                   <a href="https://icons8.com">
-                    Icony produktów: <span>https://icons8.com</span>{" "}
+                    Ikony produktów: <span>https://icons8.com</span>{" "}
                   </a>
                 </footer>
               )}
