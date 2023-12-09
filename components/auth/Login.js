@@ -39,6 +39,7 @@ const Login = () => {
   return (
     <Wrapper>
       <div className="container">
+        <img src="/bigLogo.png" alt="" className="logoLogin" />
         <h2>{isLoginIn ? "Logowanie" : "Rejestracja"}</h2>
         {errorLogin && <h4 className="errorInfo">{errorLogin}</h4>}
         <form>
@@ -111,6 +112,15 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .logoLogin {
+    width: 30vw;
+    margin-bottom: 5vh;
+    filter: saturate(0);
+    opacity: 0.3;
+    @media screen and (min-width: 801px) {
+      display: none;
+    }
+  }
 
   .container {
     background-color: #fff;
@@ -123,7 +133,7 @@ const Wrapper = styled.div`
     min-height: 60vh;
     @media screen and (max-width: 800px) {
       width: 100vw;
-      min-height: 70vh;
+      min-height: 100vh;
     }
   }
   .errorInfo {

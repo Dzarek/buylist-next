@@ -1,4 +1,4 @@
-import Head from "next/head";
+// import Head from "next/head";
 import GroceryForm from "../components/GroceryForm";
 import GroceryContainer from "../components/GroceryContainer";
 import Favorite from "../components/Favorite";
@@ -14,19 +14,19 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setFirstLoading(false);
-    }, 2000);
+    }, 3000);
   }, []);
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Lista Zakupów</title>
         <meta name="description" content="Lista Zakupów" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo192.png" />
         <link rel="shortcut icon" href="/logo192.png" />
-      </Head>
+      </Head> */}
       {firstLoading ? (
         <FirstLoading />
       ) : (
