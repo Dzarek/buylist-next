@@ -3,37 +3,41 @@ import { useState, useEffect } from "react";
 import { jedzenie } from "../data";
 
 const FirstLoading = () => {
-  // const imagesArray = [
-  //   "/images/produkty/bread.svg",
-  //   "/images/produkty/czekolada.svg",
-  //   "/images/produkty/mydło.svg",
-  //   "/images/produkty/papierToaletowy.svg",
-  //   "/images/produkty/piwo.svg",
-  //   "/images/produkty/szynka.svg",
-  //   "/images/produkty/ziemniak.svg",
-  //   "/images/produkty/pomidor.svg",
-  // ];
   const imagesArray = jedzenie.map((item) => item.src);
   const [randomImg, setRandomImg] = useState(
     imagesArray[Math.floor(Math.random() * imagesArray.length)]
   );
+  const [randomImg2, setRandomImg2] = useState(
+    imagesArray[Math.floor(Math.random() * imagesArray.length)]
+  );
+  const [randomImg3, setRandomImg3] = useState(
+    imagesArray[Math.floor(Math.random() * imagesArray.length)]
+  );
+  if (
+    randomImg2 === randomImg ||
+    randomImg3 === randomImg ||
+    randomImg2 === randomImg3
+  ) {
+    setRandomImg(imagesArray[Math.floor(Math.random() * imagesArray.length)]);
+    setRandomImg2(imagesArray[Math.floor(Math.random() * imagesArray.length)]);
+  }
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * imagesArray.length);
-      const newItem = imagesArray[randomIndex];
-      setRandomImg(newItem);
-    }, 1000); // Set interval to 1000 milliseconds (1 second)
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     const randomIndex = Math.floor(Math.random() * imagesArray.length);
+  //     const newItem = imagesArray[randomIndex];
+  //     setRandomImg(newItem);
+  //   }, 1000); // Set interval to 1000 milliseconds (1 second)
 
-    // Cleanup function to clear the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, [imagesArray]);
+  //   // Cleanup function to clear the interval when the component unmounts
+  //   return () => clearInterval(intervalId);
+  // }, [imagesArray]);
 
   return (
     <Wrapper>
       <img src={randomImg} alt="" className="fallingImg f1" />
-      <img src={randomImg} alt="" className="fallingImg f2" />
-      <img src={randomImg} alt="" className="fallingImg f3" />
+      <img src={randomImg2} alt="" className="fallingImg f2" />
+      <img src={randomImg3} alt="" className="fallingImg f3" />
       <img src="/bigLogo.png" alt="" className="bigLogo" />
       <h2>Wczytywanie...</h2>
     </Wrapper>
