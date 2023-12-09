@@ -11,6 +11,11 @@ export const jedzenie = [
     category: "pieczywo",
   },
   {
+    src: "https://img.icons8.com/fluency/48/toast.png",
+    alt: "chleb tostowy",
+    category: "pieczywo",
+  },
+  {
     src: "https://img.icons8.com/emoji/48/000000/bagel-emoji.png",
     alt: "bułki",
     category: "pieczywo",
@@ -51,13 +56,23 @@ export const jedzenie = [
     category: "nabiał",
   },
   {
-    src: "https://img.icons8.com/office/40/000000/sunny-side-up-eggs.png",
+    src: "https://img.icons8.com/fluency/48/eggs.png",
     alt: "jajka",
     category: "nabiał",
   },
   {
     src: "https://img.icons8.com/office/40/000000/apple.png",
     alt: "jabłka",
+    category: "owoce",
+  },
+  {
+    src: "https://img.icons8.com/fluency/48/watermelon.png",
+    alt: "arbuz",
+    category: "owoce",
+  },
+  {
+    src: "https://img.icons8.com/color/48/pineapple.png",
+    alt: "ananas",
     category: "owoce",
   },
   {
@@ -73,6 +88,11 @@ export const jedzenie = [
   {
     src: "https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/60/000000/external-lemon-fruit-vitaliy-gorbachev-lineal-color-vitaly-gorbachev-1.png",
     alt: "cytryna",
+    category: "owoce",
+  },
+  {
+    src: "https://img.icons8.com/fluency/48/lime.png",
+    alt: "limonka",
     category: "owoce",
   },
   {
@@ -202,10 +222,11 @@ export const jedzenie = [
     category: "przekąski",
   },
   {
-    src: "https://img.icons8.com/color/48/000000/peanut-butter.png",
+    src: "https://img.icons8.com/fluency/48/almond-butter.png",
     alt: "masło orzechowe",
     category: "przekąski",
   },
+
   {
     src: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-tea-morning-flaticons-lineal-color-flat-icons.png",
     alt: "herbata",
@@ -242,6 +263,11 @@ export const jedzenie = [
     category: "napoje",
   },
   {
+    src: "https://img.icons8.com/emoji/48/tumbler-g.png",
+    alt: "whisky",
+    category: "napoje",
+  },
+  {
     src: "https://img.icons8.com/office/40/000000/ketchup.png",
     alt: "ketchup",
     category: "inne",
@@ -254,6 +280,16 @@ export const jedzenie = [
   {
     src: "https://img.icons8.com/officel/40/000000/mayonnaise.png",
     alt: "majonez",
+    category: "inne",
+  },
+  {
+    src: "https://img.icons8.com/color/48/jam.png",
+    alt: "dżem",
+    category: "inne",
+  },
+  {
+    src: "https://img.icons8.com/color/48/cereal.png",
+    alt: "płatki",
     category: "inne",
   },
   {
