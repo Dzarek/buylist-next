@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { jedzenie } from "../data";
 
 const FirstLoading = () => {
@@ -21,17 +21,6 @@ const FirstLoading = () => {
     setRandomImg(imagesArray[Math.floor(Math.random() * imagesArray.length)]);
     setRandomImg2(imagesArray[Math.floor(Math.random() * imagesArray.length)]);
   }
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     const randomIndex = Math.floor(Math.random() * imagesArray.length);
-  //     const newItem = imagesArray[randomIndex];
-  //     setRandomImg(newItem);
-  //   }, 1000); // Set interval to 1000 milliseconds (1 second)
-
-  //   // Cleanup function to clear the interval when the component unmounts
-  //   return () => clearInterval(intervalId);
-  // }, [imagesArray]);
 
   return (
     <Wrapper>
