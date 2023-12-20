@@ -27,7 +27,7 @@ const FirstLoading = () => {
       <img src={randomImg} alt="" className="fallingImg f1" />
       <img src={randomImg2} alt="" className="fallingImg f2" />
       <img src={randomImg3} alt="" className="fallingImg f3" />
-      <img src="/bigLogo.png" alt="" className="bigLogo" />
+      <img src="/logo192.png" alt="" className="bigLogo" />
       <h2>Wczytywanie...</h2>
     </Wrapper>
   );
