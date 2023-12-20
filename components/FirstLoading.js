@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { jedzenie } from "../data";
 
 const FirstLoading = () => {
@@ -13,14 +13,22 @@ const FirstLoading = () => {
   const [randomImg3, setRandomImg3] = useState(
     imagesArray[Math.floor(Math.random() * imagesArray.length)]
   );
-  if (
-    randomImg2 === randomImg ||
-    randomImg3 === randomImg ||
-    randomImg2 === randomImg3
-  ) {
+
+  useEffect(() => {
     setRandomImg(imagesArray[Math.floor(Math.random() * imagesArray.length)]);
     setRandomImg2(imagesArray[Math.floor(Math.random() * imagesArray.length)]);
-  }
+    setRandomImg3(imagesArray[Math.floor(Math.random() * imagesArray.length)]);
+    if (
+      randomImg2 === randomImg ||
+      randomImg3 === randomImg ||
+      randomImg2 === randomImg3
+    ) {
+      setRandomImg(imagesArray[Math.floor(Math.random() * imagesArray.length)]);
+      setRandomImg2(
+        imagesArray[Math.floor(Math.random() * imagesArray.length)]
+      );
+    }
+  }, []);
 
   return (
     <Wrapper>
@@ -50,7 +58,7 @@ const Wrapper = styled.div`
     }
   }
   .fallingImg {
-    width: 17%;
+    width: 16%;
     object-fit: cover;
     animation: falling 1s linear 1 forwards;
     position: absolute;
@@ -58,6 +66,9 @@ const Wrapper = styled.div`
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;
+    @media screen and (min-width: 450px) {
+      width: 12%;
+    }
     @media screen and (min-width: 801px) {
       display: none;
     }
