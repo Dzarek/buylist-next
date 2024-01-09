@@ -700,10 +700,13 @@ Grocery List
   display: none;
 }
 
-@media screen and (max-width: 800px) {
+/* @media screen and (max-width: 800px) {
   .favorite-container img:hover {
     animation: rotateImg 1s ease-in;
   }
+} */
+.flyImg {
+  animation: rotateImg 1s ease-in 1;
 }
 
 @media screen and (min-width: 801px) {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ImgComponent from "./ImgComponent";
 
 const FavoriteJedzenie = ({ jedzenie, addItemImage }) => {
   const [selectCategoryJedzenie, setSelectCategoryJedzenie] =
@@ -41,14 +42,10 @@ const FavoriteJedzenie = ({ jedzenie, addItemImage }) => {
       </form>
       <div className="favorite-container-products">
         {selectCategoryJedzenie.map((produkt, index) => (
-          <img
+          <ImgComponent
             key={index}
-            className={`${produkt.category}Bgc`}
-            src={produkt.src}
-            alt={produkt.alt}
-            onClick={() => {
-              addItemImage(produkt);
-            }}
+            produkt={produkt}
+            addItemImage={addItemImage}
           />
         ))}
       </div>

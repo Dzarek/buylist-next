@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ImgComponent from "./ImgComponent";
 
 const FavoriteChemia = ({ chemia, addItemImage }) => {
   const [selectCategoryChemia, setSelectCategoryChemia] = useState(chemia);
@@ -40,12 +41,10 @@ const FavoriteChemia = ({ chemia, addItemImage }) => {
       </form>
       <div className="favorite-container-products">
         {selectCategoryChemia.map((produkt, index) => (
-          <img
+          <ImgComponent
             key={index}
-            className={`${produkt.category}Bgc`}
-            src={produkt.src}
-            alt={produkt.alt}
-            onClick={() => addItemImage(produkt)}
+            produkt={produkt}
+            addItemImage={addItemImage}
           />
         ))}
       </div>
