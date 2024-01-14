@@ -23,7 +23,6 @@ const ImgComponent = ({ produkt, addItemImage }) => {
           addItemImage(produkt);
         }}
       />
-      ;
     </>
   );
 };
