@@ -2,8 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { db, auth } from "../firebase/clientApp";
 import {
   collection,
-  getDocs,
-  addDoc,
+  // getDocs,
+  // addDoc,
+  setDoc,
+  onSnapshot,
   updateDoc,
   doc,
   deleteDoc,
@@ -86,16 +88,30 @@ const AppProvider = ({ children }) => {
   // Pobieranie produktów Firebase
   const getProducts = async () => {
     try {
-      const data = await getDocs(productsCollectionRefAll);
-      const items = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      const sortItems = items.sort(
-        (a, b) => Number(a.productId) - Number(b.productId)
-      );
-      if (items.length > 0) {
-        setProducts(sortItems);
-      } else {
-        setProducts([]);
-      }
+      // const data = await getDocs(productsCollectionRefAll);
+      // const items = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      // const sortItems = items.sort(
+      //   (a, b) => Number(a.productId) - Number(b.productId)
+      // );
+      // if (items.length > 0) {
+      //   setProducts(sortItems);
+      // } else {
+      //   setProducts([]);
+      // }
+      onSnapshot(productsCollectionRefAll, (snapshot) => {
+        const items = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        const sortItems = items.sort(
+          (a, b) => Number(a.productId) - Number(b.productId)
+        );
+        if (items.length > 0) {
+          setProducts(sortItems);
+        } else {
+          setProducts([]);
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -112,10 +128,15 @@ const AppProvider = ({ children }) => {
 
   // Wysyłka produktu Firebase
   const postProducts = async (id, productName) => {
-    await addDoc(productsCollectionRefAll, {
+    // await addDoc(productsCollectionRefAll, {
+    //   productId: id,
+    //   name: productName,
+    // });
+    await setDoc(productsCollectionRefAll, {
       productId: id,
       name: productName,
     });
+
     await getProducts();
   };
 
