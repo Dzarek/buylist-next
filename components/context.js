@@ -3,8 +3,8 @@ import { db, auth } from "../firebase/clientApp";
 import {
   collection,
   // getDocs,
-  // addDoc,
-  setDoc,
+  addDoc,
+  // setDoc,
   onSnapshot,
   updateDoc,
   doc,
@@ -128,11 +128,7 @@ const AppProvider = ({ children }) => {
 
   // Wysyłka produktu Firebase
   const postProducts = async (id, productName) => {
-    // await addDoc(productsCollectionRefAll, {
-    //   productId: id,
-    //   name: productName,
-    // });
-    await setDoc(productsCollectionRefAll, {
+    await addDoc(productsCollectionRefAll, {
       productId: id,
       name: productName,
     });
