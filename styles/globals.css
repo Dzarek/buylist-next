@@ -430,6 +430,11 @@ Grocery List
   flex-direction: row;
   align-items: center;
 }
+.ok button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .grocery-item:hover {
   color: var(--clr-grey-5);
@@ -448,18 +453,23 @@ Grocery List
 }
 
 .edit-btn,
-.delete-btn {
+.delete-btn,
+.add-btn {
   background: transparent;
   border-color: transparent;
   cursor: pointer;
   font-size: 1.3rem;
-  margin: 0 0.2rem;
+  /* margin: 0 0.2rem; */
   transition: var(--transition);
 }
 
 .edit-btn {
   color: rgb(91, 146, 43);
-  margin-right: 4vw;
+  margin-right: 2vw;
+}
+.add-btn {
+  color: rgb(91, 146, 43);
+  margin-right: 2vw;
 }
 
 .delete-btn {

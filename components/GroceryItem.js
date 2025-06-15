@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { useGlobalContext } from "./context";
+import { HiOutlinePlusCircle } from "react-icons/hi";
 
 const GroceryItem = ({ id, name }) => {
   const { deleteItem, handleEditItem } = useGlobalContext();
@@ -22,6 +23,7 @@ const GroceryItem = ({ id, name }) => {
         >
           <FaEdit />
         </button>
+
         <p className="title">{name}</p>
       </div>
       <button

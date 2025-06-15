@@ -34,6 +34,7 @@ const AppProvider = ({ children }) => {
   const [userProductsList, setUserProductsList] = useState("a");
   const [name, setName] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
+  const [error, setError] = useState(false);
 
   const getUser = getAuth();
 
@@ -114,6 +115,11 @@ const AppProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error);
+      displayAlert(
+        "Coś poszło nie tak! Sprawdź połączenie internetowe.",
+        "danger"
+      );
+      setError(true);
     }
   };
   useEffect(() => {
@@ -128,27 +134,39 @@ const AppProvider = ({ children }) => {
 
   // Wysyłka produktu Firebase
   const postProducts = async (id, productName) => {
-    await addDoc(productsCollectionRefAll, {
-      productId: id,
-      name: productName,
-    });
-
-    await getProducts();
+    try {
+      await addDoc(productsCollectionRefAll, {
+        productId: id,
+        name: productName,
+      });
+      await getProducts();
+    } catch (error) {
+      console.log(error);
+      setError(true);
+    }
   };
 
   // Dodawanie produktu
-  const addItem = (e) => {
+  const addItem = async (e) => {
     e.preventDefault();
     const id = Number(new Date().getTime().toString().slice(0, -1));
     if (productName && !edit) {
-      displayAlert("dodano do listy", "success");
       const newProduct = {
         productId: id,
         name: productName,
       };
-      setProducts([...products, newProduct]);
-      postProducts(id, productName);
-      setBackToDefault();
+      await postProducts(id, productName);
+      if (error) {
+        return displayAlert(
+          "Coś poszło nie tak! Sprawdź połączenie internetowe.",
+          "danger"
+        );
+      } else {
+        displayAlert("dodano do listy", "success");
+
+        setProducts([...products, newProduct]);
+        setBackToDefault();
+      }
     } else if (productName && edit) {
       displayAlert("produkt zmieniony", "success");
       setProducts(
@@ -193,6 +211,7 @@ const AppProvider = ({ children }) => {
     setProductName("");
     setEdit(false);
     setEditID(null);
+    setError(false);
   }
 
   function displayAlert(text, action) {
